@@ -13,14 +13,22 @@
  * Prints out the name of each item in the given array.
  * @param {Item[]} items - array of items
  */
+let displayed = false;
 function logNames(items) {
   // TODO: use `forEach`
   const names = [];
   items.forEach((index) => {
-    console.log(`${index.name}`);
-    names.push(index.name);
+    if (!displayed) {
+      console.log(`${index.name}`);
+    } else {
+      names.push(index.name);
+    }
   });
-  return names;
+  if (!displayed) {
+    displayed = true;
+  } else {
+    return names;
+  }
 }
 
 /**
@@ -134,3 +142,29 @@ console.log(
 const category = prompt("Enter a category you would like to see:", "fruit");
 console.log(`The items in the ${category} category are:`);
 console.log(getItemsByCategory(INVENTORY, category));
+
+document.addEventListener("DOMContentLoaded", function () {
+  for (let i = 0; i < 7; i++) {
+    const text = document.getElementById(`text${i}`);
+    if (i == 0) {
+      text.textContent = `${logNames(INVENTORY)}`;
+    } else if (i == 1) {
+      text.textContent = `Here are the names again in all uppercase: ${getUppercaseNames(
+        INVENTORY
+      )}`;
+    } else if (i == 2) {
+      text.textContent = `In total, we have ${countItems(
+        INVENTORY
+      )} items in stock.`;
+    } else if (i == 3) {
+      text.textContent = `It would cost $${totalCost?.toFixed(
+        2
+      )} to purchase everything in stock.`;
+    } else if (i == 5) {
+      text.textContent = `The price of ${itemName} is ${getItemPriceByName(
+        INVENTORY,
+        itemName
+      )}.`;
+    }
+  }
+});
